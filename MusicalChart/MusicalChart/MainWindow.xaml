@@ -1,0 +1,189 @@
+<Window x:Class="MusicalChart.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
+        xmlns:local="clr-namespace:MusicalChart"
+        mc:Ignorable="d" Title="Musical Chart">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F9EB8B" Offset="0.0" />
+            <GradientStop Color="#F9E151" Offset="0.5" />
+            <GradientStop Color="#FAD71B" Offset="1.0" />
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.DataContext>
+        <local:MusicViewModel x:Name="viewModel"/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="visibilityConverter"/>
+
+        <Geometry x:Key="PathData">
+            M0,25.400002L9.7000122,25.400002 9.7000122,29.4 0,29.4z M0,17.299997L13.700012,17.299997 13.700012,21.299997 0,21.299997z M0,9.4999973L17.799988,9.4999973 17.799988,13.500011 0,13.500011z M0,1.8000026L19.299988,1.8000026 19.299988,5.8000013 0,5.8000013z M21.100037,0L25.5,0 31.400024,5.9000074C31.400024,5.9000074 32,6.4999978 32,6.9999978 32,7.70001 31.400024,8.3000003 30.700012,8.3000003 30.600037,8.3000003 29.799988,7.9000064 29.700012,7.8000008L25.5,4.3000018 25.5,26.100014C25.5,29.000006 23.100037,31.4 20.200012,31.4 17.299988,31.4 14.900024,29.000006 14.900024,26.100014 14.900024,23.199989 17.299988,20.799997 20.200012,20.799997 20.5,20.799997 20.799988,20.799997 21.100037,20.900004z
+        </Geometry>
+
+        <Style x:Key="MusicCheckboxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#321B0B" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MusicButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#321B0B" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="Margin" Value="5,0" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                    <Setter Property="Background" Value="#8C7A6B" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="instrumentLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#321B0B"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="15,5,0,0"/>
+        </Style>
+      
+    </Window.Resources>
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="9*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.1*"/>
+                <ColumnDefinition Width="7.4*"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <Path Data="{StaticResource PathData}" Stroke="#321B0B" Fill="#321B0B" Margin="0,5,0,0"/>
+                <Label Content="Sync Musical Chart" FontSize="23" Foreground="#321B0B" Margin="0,0,0,5"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5">
+                <Button Content="Play All" Command="{Binding PlayAllCommand}" Style="{StaticResource MusicButtonStyle}" 
+                     IsEnabled="{Binding IsPlayButtonEnabled}" Margin="0,20,0,0"/>
+                <Button Content="Stop All" Command="{Binding StopAllCommand}" Style="{StaticResource MusicButtonStyle}" 
+                     IsEnabled="{Binding IsStopButtonEnabled}" Margin="0,20,0,0"/>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Instrument Selection Panel -->
+        
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Drums -->
+            <CheckBox Grid.Row="3" Grid.Column="0" IsChecked="{Binding IsDrumsEnabled}" Style="{StaticResource MusicCheckboxStyle}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="Drums" Style="{StaticResource instrumentLabelStyle}"/>
+
+            <!-- Bass -->
+            <CheckBox Grid.Row="2" Grid.Column="0" IsChecked="{Binding IsBassEnabled}" Style="{StaticResource MusicCheckboxStyle}"/>
+            <Label Grid.Row="2" Grid.Column="1" Content="Bass" Style="{StaticResource instrumentLabelStyle}"/>
+
+            <!-- Others -->
+            <CheckBox Grid.Row="1" Grid.Column="0" IsChecked="{Binding IsOthersEnabled}" Style="{StaticResource MusicCheckboxStyle}"/>
+            <Label Grid.Row="1" Grid.Column="1" Content="Others" Style="{StaticResource instrumentLabelStyle}"/>
+
+            <!-- Vocals -->
+            <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding IsVocalsEnabled}" Style="{StaticResource MusicCheckboxStyle}"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Vocals" Style="{StaticResource instrumentLabelStyle}"/>
+        </Grid>
+
+        <chart:SfChart Grid.Column="1" Grid.Row="1" Background="WhiteSmoke" Palette="Custom" >
+            <chart:SfChart.PrimaryAxis>
+                <chart:NumericalAxis Visibility="Hidden"
+                                  PlotOffsetEnd="20" ShowGridLines="False">
+                </chart:NumericalAxis>
+            </chart:SfChart.PrimaryAxis>
+
+            <chart:SfChart.SecondaryAxis>
+                <chart:NumericalAxis Minimum="0" Maximum="120" Interval="30" Visibility="Hidden" >
+
+                    <chart:NumericalAxis.MajorGridLineStyle>
+                        <Style TargetType="Line">
+                            <Setter Property="Stroke" Value="#CC321B0B"/>
+                            <Setter Property="StrokeDashArray" Value="2,3"/>
+                            <Setter Property="StrokeThickness" Value="1"/>
+                        </Style>
+                    </chart:NumericalAxis.MajorGridLineStyle>
+
+                    <chart:NumericalAxis.StripLines>
+                        <chart:ChartStripLine  Start="60" Width="30" Background="#003405" />
+                    </chart:NumericalAxis.StripLines>
+                    
+                </chart:NumericalAxis>
+            </chart:SfChart.SecondaryAxis>
+
+            <chart:SfChart.Annotations>
+                <chart:VerticalLineAnnotation x:Name="playbackLine" X1="{Binding PlaybackPosition}"
+                     Stroke="Green" StrokeThickness="2.5">
+                </chart:VerticalLineAnnotation>
+            </chart:SfChart.Annotations>
+
+            <chart:SfChart.Series>
+
+                <!-- Drums -->
+                <chart:ScatterSeries Visibility="{Binding IsDrumsEnabled, Converter={StaticResource visibilityConverter}}" SegmentColorPath="ColorPath"
+                                 ItemsSource="{Binding DrumsData}" XBindingPath="X" YBindingPath="Y" ScatterHeight="6" ScatterWidth="6"/>
+
+                <!-- Bass -->
+                <chart:LineSeries Visibility="{Binding IsBassEnabled, Converter={StaticResource visibilityConverter}}" SegmentColorPath="ColorPath"
+                                  ItemsSource="{Binding BassData}" XBindingPath="X"  YBindingPath="Y" StrokeThickness="2" >
+                    <chart:LineSeries.AdornmentsInfo>
+                        <chart:ChartAdornmentInfo ShowMarker="True" Symbol="Diamond" SymbolHeight="6" SymbolWidth="6"/>
+                    </chart:LineSeries.AdornmentsInfo>
+                </chart:LineSeries>
+
+                <!-- Others -->
+                <chart:ScatterSeries Visibility="{Binding IsOthersEnabled, Converter={StaticResource visibilityConverter}}" SegmentColorPath="ColorPath"
+                     ItemsSource="{Binding OthersData}" XBindingPath="X" YBindingPath="Y" ScatterHeight="6" ScatterWidth="6">
+
+
+                </chart:ScatterSeries>
+
+                <!--  Vocals -->
+                <chart:StepLineSeries Visibility="{Binding IsVocalsEnabled, Converter={StaticResource visibilityConverter}}" SegmentColorPath="ColorPath"
+                              ItemsSource="{Binding VocalsData}" XBindingPath="X" YBindingPath="Y" StrokeThickness="2"/>
+                
+            </chart:SfChart.Series>
+
+        </chart:SfChart>
+
+    </Grid>
+
+</Window>
