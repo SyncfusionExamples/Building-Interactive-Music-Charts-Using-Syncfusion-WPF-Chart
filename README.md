@@ -54,7 +54,8 @@ Our audio chart application now focuses on visualizing a single song track with 
 -	Shows real-time playback position using a moving vertical annotation line.
 -	Synchronizes audio playback with visual chart progression, allowing users to see which parts of the song have been played.
 
-<img width="1918" height="991" alt="Image" src="https://github.com/user-attachments/assets/d80c1e58-9926-41ad-a375-5927e4500834" />
+
+https://github.com/user-attachments/assets/e1f21033-8672-47de-b3f7-5716a702f603
 
 
 ## Troubleshooting
