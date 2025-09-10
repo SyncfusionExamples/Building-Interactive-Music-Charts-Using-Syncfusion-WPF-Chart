@@ -57,7 +57,7 @@ Our audio chart application now focuses on visualizing a single song track with 
 <img width="1918" height="991" alt="Image" src="https://github.com/user-attachments/assets/d80c1e58-9926-41ad-a375-5927e4500834" />
 
 
-**Troubleshooting**
+## Troubleshooting
 
 **Path Too Long Exception**
 
