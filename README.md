@@ -64,6 +64,6 @@ https://github.com/user-attachments/assets/e1f21033-8672-47de-b3f7-5716a702f603
 
 If you encounter a "path too long" exception while building this example project, close Visual Studio, rename the repository to a shorter name, and then rebuild the project. 
 
-For a step-by-step procedure, refer to the [Musical Chart blog]().
+For a step-by-step procedure, refer to the [Musical Chart blog](https://www.syncfusion.com/blogs/post/wpf-charts-audio-visualization).
 
 
